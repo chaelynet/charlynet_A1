@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - CharlyNet Crypto API</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-coins me-2"></i>
+                CharlyNet Crypto API
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">
+                    <i class="fas fa-home me-1"></i>
+                    Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="h3 mb-0">
+                            <i class="fas fa-book me-2"></i>
+                            API Documentation
+                        </h1>
+                        <p class="mb-0 mt-2">Complete reference for the CharlyNet Crypto API endpoints</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Base URL -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Base URL</h5>
+                        <code class="bg-secondary p-2 rounded d-block">{{ request.url_root }}api/</code>
+                        <small class="text-muted">All API endpoints are prefixed with this base URL</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Endpoints -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h4>Endpoints</h4>
+            </div>
+        </div>
+
+        <!-- Get All Prices -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Get All Cryptocurrency Prices</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/crypto/prices</code></p>
+                        <p><strong>Description:</strong> Retrieves current prices for all supported cryptocurrencies</p>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "success": true,
+  "data": {
+    "btc": {
+      "id": "bitcoin",
+      "symbol": "btc",
+      "name": "Bitcoin",
+      "current_price": 42000.50,
+      "price_change_24h": 2.45,
+      "market_cap": 820000000000,
+      "volume_24h": 25000000000
+    }
+  },
+  "timestamp": "2025-06-22T10:30:00"
+}</code></pre>
+                        
+                        <button class="btn btn-outline-primary btn-sm" onclick="testEndpoint('/api/crypto/prices')">
+                            <i class="fas fa-play me-1"></i>
+                            Test Endpoint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Price by Symbol -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Get Price by Symbol</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/crypto/prices/{symbol}</code></p>
+                        <p><strong>Description:</strong> Retrieves current price for a specific cryptocurrency</p>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li><code>symbol</code> - Cryptocurrency symbol (e.g., btc, eth, ada)</li>
+                        </ul>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "success": true,
+  "data": {
+    "id": "bitcoin",
+    "symbol": "btc",
+    "name": "Bitcoin",
+    "current_price": 42000.50,
+    "price_change_24h": 2.45,
+    "market_cap": 820000000000,
+    "volume_24h": 25000000000
+  },
+  "timestamp": "2025-06-22T10:30:00"
+}</code></pre>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" id="symbolInput" placeholder="Enter symbol (e.g., btc)" value="btc">
+                                    <button class="btn btn-outline-primary" onclick="testSymbolEndpoint()">
+                                        <i class="fas fa-play me-1"></i>
+                                        Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Price History -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Get Price History</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/crypto/history/{symbol}</code></p>
+                        <p><strong>Description:</strong> Retrieves price history for a specific cryptocurrency</p>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li><code>symbol</code> - Cryptocurrency symbol (e.g., btc, eth, ada)</li>
+                            <li><code>days</code> (optional) - Number of days (default: 7, max: 365)</li>
+                        </ul>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "success": true,
+  "data": [
+    {
+      "timestamp": "2025-06-15T00:00:00",
+      "price": 41500.30
+    },
+    {
+      "timestamp": "2025-06-16T00:00:00",
+      "price": 42000.50
+    }
+  ],
+  "symbol": "BTC",
+  "days": 7
+}</code></pre>
+                        
+                        <button class="btn btn-outline-primary btn-sm" onclick="testEndpoint('/api/crypto/history/btc?days=7')">
+                            <i class="fas fa-play me-1"></i>
+                            Test Endpoint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Get Supported Cryptocurrencies -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Get Supported Cryptocurrencies</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/crypto/supported</code></p>
+                        <p><strong>Description:</strong> Retrieves list of all supported cryptocurrencies</p>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "success": true,
+  "data": [
+    {
+      "id": "bitcoin",
+      "symbol": "btc",
+      "name": "Bitcoin"
+    },
+    {
+      "id": "ethereum",
+      "symbol": "eth",
+      "name": "Ethereum"
+    }
+  ],
+  "count": 10
+}</code></pre>
+                        
+                        <button class="btn btn-outline-primary btn-sm" onclick="testEndpoint('/api/crypto/supported')">
+                            <i class="fas fa-play me-1"></i>
+                            Test Endpoint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crypto Analysis -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Get Crypto Analysis</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/crypto/analysis</code></p>
+                        <p><strong>Description:</strong> Get intelligent analysis of cryptocurrency market movements</p>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "success": true,
+  "analysis": "🔍 ANÁLISIS DE MOVIMIENTOS CRIPTO...",
+  "timestamp": "2025-06-22T15:30:00"
+}</code></pre>
+                        
+                        <button class="btn btn-outline-primary btn-sm" onclick="testEndpoint('/api/crypto/analysis')">
+                            <i class="fas fa-play me-1"></i>
+                            Test Endpoint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crypto Assistant -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">Crypto Assistant</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/assistant</code></p>
+                        <p><strong>Description:</strong> General crypto assistant for custom queries</p>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li><code>q</code> (optional) - Query in Spanish (default: analysis of strange movements)</li>
+                        </ul>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "success": true,
+  "query": "¿Cuáles son las criptomonedas con movimientos extraños hoy?",
+  "response": "🔍 ANÁLISIS DE MOVIMIENTOS CRIPTO...",
+  "timestamp": "2025-06-22T15:30:00"
+}</code></pre>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" id="assistantQuery" placeholder="¿Cuáles son los precios actuales?" value="¿Cuáles son las criptomonedas con movimientos extraños hoy?">
+                                    <button class="btn btn-outline-primary" onclick="testAssistantEndpoint()">
+                                        <i class="fas fa-play me-1"></i>
+                                        Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Status -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="mb-0">API Status</h6>
+                            </div>
+                            <div class="col-auto">
+                                <span class="badge bg-success">GET</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Endpoint:</strong> <code>/status</code></p>
+                        <p><strong>Description:</strong> Health check endpoint for API status</p>
+                        
+                        <h6>Response Example:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "status": "online",
+  "service": "CharlyNet Crypto API",
+  "last_update": "2025-06-22T10:30:00",
+  "supported_coins": 10
+}</code></pre>
+                        
+                        <button class="btn btn-outline-primary btn-sm" onclick="testEndpoint('/api/status')">
+                            <i class="fas fa-play me-1"></i>
+                            Test Endpoint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Response Modal -->
+        <div class="modal fade" id="responseModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">API Response</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <pre id="responseContent" class="bg-secondary p-3 rounded"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Handling -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Error Handling</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>The API uses standard HTTP status codes and returns error responses in JSON format:</p>
+                        
+                        <h6>Error Response Format:</h6>
+                        <pre class="bg-secondary p-3 rounded"><code>{
+  "error": "Error type",
+  "message": "Detailed error description"
+}</code></pre>
+                        
+                        <h6>Status Codes:</h6>
+                        <ul>
+                            <li><code>200</code> - Success</li>
+                            <li><code>404</code> - Resource not found</li>
+                            <li><code>500</code> - Internal server error</li>
+                            <li><code>503</code> - Service unavailable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>CharlyNet Crypto API</h6>
+                    <p class="mb-0">Real-time cryptocurrency price data powered by CoinGecko</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="/" class="text-light me-3">Dashboard</a>
+                    <a href="/api/status" class="text-light">API Status</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function getApiUrl(endpoint) {
+            return window.location.origin + endpoint;
+        }
+
+        function testEndpoint(endpoint) {
+            fetch(getApiUrl(endpoint))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('responseContent').textContent = JSON.stringify(data, null, 2);
+                    new bootstrap.Modal(document.getElementById('responseModal')).show();
+                })
+                .catch(error => {
+                    document.getElementById('responseContent').textContent = 'Error: ' + error.message;
+                    new bootstrap.Modal(document.getElementById('responseModal')).show();
+                });
+        }
+
+        function testSymbolEndpoint() {
+            const symbol = document.getElementById('symbolInput').value.trim();
+            if (symbol) {
+                testEndpoint(`/api/crypto/prices/${symbol}`);
+            }
+        }
+
+        function testAssistantEndpoint() {
+            const query = document.getElementById('assistantQuery').value.trim();
+            if (query) {
+                testEndpoint(`/api/assistant?q=${encodeURIComponent(query)}`);
+            }
+        }
+    </script>
+</body>
+</html>
