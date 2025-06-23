@@ -340,10 +340,10 @@ def internal_error(error):
         'message': 'An unexpected error occurred'
     }), 500
 
-if __name__ == '__main__':
-    # Initial price update
- crypto_service.update_prices()
-    import os
-port = int(os.environ.get("PORT", 5000))
-app.run(host="0.0.0.0", port=port, debug=True)
+343| if __name__ == '__main__':
+344|     # Initial price update
+345|     crypto_service.update_prices()
+346|     port = int(os.environ.get("PORT", 5000))
+347|     app.run(host="0.0.0.0", port=port, debug=True)
+
 
